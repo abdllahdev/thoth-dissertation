@@ -1,0 +1,27 @@
+\documentclass{standalone}
+\usepackage{tikz}
+
+\begin{document}
+
+\begin{tikzpicture}
+  % Form container
+  \draw[fill=green!50,rounded corners=5pt] (1,0) rectangle (7.5,3);
+
+  % Label and input container for first field
+  \draw[fill=white,rounded corners=3pt] (1.5,2) rectangle (7,2.75);
+  \node at (2,2.375) {\color{blue}Title};
+  \draw[fill=white,rounded corners=2pt] (3,2.1) rectangle (6.75,2.65);
+  \draw (4.5,2.375) node[text width=3cm,align=center] {\color{red}Enter post title};
+
+  % Label and input container for second field
+  \draw[fill=blue!50,rounded corners=3pt] (1.5,1) rectangle (7,1.75);
+  \node at (2.25,1.375) {Content};
+  \draw[fill=red!50,rounded corners=2pt] (3,1.1) rectangle (6.75,1.65);
+  \draw (4.75,1.375) node[text width=3cm,align=center] {Enter post content};
+
+  % Submit button
+  \draw[fill=yellow!80,rounded corners=3pt] (1.5,0.2) rectangle (3,0.8);
+  \node at (2.25,0.5) {Create};
+\end{tikzpicture}
+
+\end{document}
