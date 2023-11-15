@@ -43,49 +43,42 @@ For instance, suppose the client app has an HTML form that sends the wrong data 
 
 ### Boilerplate Code Problem
 
-Building full-stack apps requires too much boilerplate code, which makes the development time-consuming. Boilerplate code in full-stack web applications refers to the repetitive code that must be written. This code is often necessary for the app to function correctly but does not directly contribute to the application's unique features or functionality. This includes code for writing input validation schemas, setting up the middlewares that are used for data validation, etc. Moreover, most modern web apps usually have common features like authentication and permissions, which can be tedious to setup using the currently available tools. Here are some examples of common boilerplate code:
+Building full-stack apps requires too much boilerplate code, which makes the development time-consuming. Boilerplate code in full-stack web applications refers to the repetitive code that must be written. This code is often necessary for the app to function correctly but does not directly contribute to the application's unique features or functionality. It includes simple input validations, such as checking if the server received the correct data types, or verifying if the client sent all the required inputs. Additionally, setting up the middleware for data validation and authentication adds to this burden. Moreover, most modern web apps commonly require features like authentication and permissions, which can be tedious to set up using currently available tools. Here are some examples of common boilerplate code:
 
 1- **Validation schemes**: Validation schemas can be used by validation middlewares to validate if the client app sent the right data or not. Listing \ref{lst:validation-schema-example} shows a schema that validates that clients sent a JSON object with fields `username` and `password` of type string. When the client fails to send any of the required fields or sends the incorrect data types, this schema will throw an error. The code uses a TypeScript validation library called Zod[@zod-ref].
 
 \newpage
 
 \begin{lstlisting}[caption=Validation schema example.,label={lst:validation-schema-example},language=JavaScript]
-/\*_ An example in NodeJS/ExpressJS and Zod _/
+/** An example in NodeJS/ExpressJS and Zod */
 import { z } from 'zod';
 
 export const signup = z.object({
-data: z.object({
-username: z.string({
-required_error: '`username` is required',
-}),
-password: z.string({
-required_error: '`password` is required',
-}),
-}),
+  data: z.object({
+    username: z.string({
+      required_error: '`username` is required',
+    }),
+    password: z.string({
+      required_error: '`password` is required',
+    }),
+  }),
 });
 \end{lstlisting}
 
 2- **Middlewares**: Middlewares are used to perform extra operations on the request before handing it to the function that is responsible for handling it. Middlewares are usually used to do data validation or check user permissions. The code in Listing \ref{lst:middleware-example} shows how middlewares can be used for data validation.
 
 \begin{lstlisting}[caption=Middlewares example.,label={lst:middleware-example},language=JavaScript]
-/\*_ An example in NodeJS/ExpressJS _/
+/** An example in NodeJS/ExpressJS */
 const express = require('express');
 const app = express();
 
-/\*\*
+/** A function that uses the validation schema and validates the body of the request */
+function validationMiddleware(req, res, next) { /_ body \*/ }
 
-- A function that uses the validation schema
-- and validates the body of the request
-  _/
-  function validationMiddleware(req, res, next) { /_ body \*/ }
+/** A function that handles the requests */
+function signUpUser (req, res, next) { /_ body \*/ }
 
-/\*\*
-
-- A function that handles the requests
-  _/
-  function signUpUser (req, res, next) { /_ body \*/ }
-
-/\*_ Route _/
+/** Route */
 app.post('/api/auth/signup', validationMiddleware, signUpUser);
 \end{lstlisting}
 
@@ -105,7 +98,7 @@ In recent years, there has been a growing interest in multitier programming in l
 
 **Links**
 
-Links[@links-ref] is a statically-typed functional language that offers developers a solution to create web apps in a single language. It achieves that by requiring the developers to annotate their code with "client" or "server" annotations on functions levels so that the compiler can split the code. Any app built using Links is compiled to an OCaml server, a client in JavaScript, and database queries in SQL. Although Links provides a type-safe web programming model, which reduces the risk of errors and vulnerabilities in the application, it still has several problems that prevent it from being widely adopted. It is a functional programming language and has unfamiliar syntax, which can make it difficult to learn for developers who are not familiar with this paradigm.
+Links[@links-ref] is a statically-typed functional language that offers developers a solution to create web apps in a single language. It achieves that by requiring the developers to annotate their code with "client" or "server" annotations on functions levels so that the compiler can split the code. Any app built using Links compiles to a client app in JavaScript, database queries in SQL, and the remained Links code is interpreted on the server. Although Links provides a type-safe web programming model, which reduces the risk of errors and vulnerabilities in the application, it still has several problems that prevent it from being widely adopted. It is a functional programming language and has unfamiliar syntax, which can make it difficult to learn for developers who are not familiar with this paradigm.
 
 **Opa**
 
@@ -118,11 +111,10 @@ Unlike Links and Opa, Hop[@hop-ref] is a dynamically-type language. It is one of
 \begin{lstlisting}[caption=Hop example.,label={lst:hop-example},language=JavaScript]
 service hello() {
 return (
-
-<html>
-<div onclick=~{ alert("world") }>hello</div>
-</html>
-);
+  <html>
+    <div onclick=~{ alert("world") }>hello</div>
+  </html>
+  );
 }
 \end{lstlisting}
 

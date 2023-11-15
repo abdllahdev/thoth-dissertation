@@ -46,7 +46,6 @@ coverage.xml
 *.mo
 *.pot
 
-# Django stuff:
 *.log
 
 # Sphinx documentation
@@ -60,3 +59,8 @@ target/
 
 # Node modules
 node_modules/
+
+# Template stuff
+style/template.aux
+style/template.fdb_latexmk
+style/template.fls
